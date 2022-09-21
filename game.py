@@ -106,8 +106,14 @@ class Game:
             print(f"\033[31m{i}\033[37m", end="")
             for j in range(self.size):
                 if i == x and y == j:
-                    print(f" \033[31m{self.arr[i][j]}\033[37m", end="")
+                    if self.arr[i][j] == -1:
+                        print(f" \033[31m@\033[37m", end="")
+                    else:
+                        print(f" \033[31m{self.arr[i][j]}\033[37m", end="")
                 else:
-                    print(f" {self.arr[i][j]}", end="")
+                    if self.arr[i][j] == -1:
+                        print(f" @", end="")
+                    else:
+                        print(f" {self.arr[i][j]}", end="")
             print()
         print()

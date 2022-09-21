@@ -12,8 +12,10 @@ print("!!! 모든 좌표는 0부터 시작 !!!")
 while 1:
     x, y = map(int, input("구멍 좌표를 입력하세요.(종료는 -1, -1): ").split())
     if x < 0 or y < 0:
+        print("입력 종료")
         break
     if not check(x,y):
+        print("좌표를 확인하세요!")
         continue
     arr[x][y] = -1
 
