@@ -5,7 +5,7 @@ SIZE = 8
 arr = [[0] * SIZE for i in range(SIZE)]
 
 while 1:
-    x, y = map(int, input("좌표를 입력하세요.(종료는 -1, -1): ").split())
+    x, y = map(int, input("구멍 좌표를 입력하세요.(종료는 -1, -1): ").split())
     if x < 0 or y < 0:
         break
     arr[x][y] = -1
