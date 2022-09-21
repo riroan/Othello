@@ -1,50 +1,56 @@
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 from game import Game
 from ai import AI
 
-SIZE = 8
-arr = [[0] * SIZE for i in range(SIZE)]
+app = FastAPI()
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["GET", "POST"],
+    allow_headers=["*"],
+)
+
+game = None
 
 
-def check(x, y):
-    return 0 <= x < SIZE and 0 <= y < SIZE
-
-print("!!! 모든 좌표는 0부터 시작 !!!")
-while 1:
-    x, y = map(int, input("구멍 좌표를 입력하세요.(종료는 -1 -1): ").split())
-    if x < 0 or y < 0:
-        print("입력 종료")
-        break
-    if not check(x,y):
-        print("좌표를 확인하세요!")
-        continue
-    arr[x][y] = -1
-
-while 1:
-    first = int(input("선공 : 1, 후공 : 0 -> "))
-    if first in [0, 1]:
-        break
+class Item(BaseModel):
+    arr: list
+    first: int
 
 
-game = Game(arr)
-x, y = -1, -1
-while not game.winner:
-    if first:
-        game.display(x, y)
-        game.getXY()
+@app.post("/")
+async def func1(item: Item):
+    global game
+    game = Game(item.arr)
 
-        if game.winner:
-            break
+    return game.arr
 
-        agent = AI(game)
-        x, y = agent.getAction()
+
+class Item2(BaseModel):
+    arr: list
+    x: int
+    y: int
+
+
+@app.post("/play")
+async def func2(item: Item2):
+    global game
+    arr = item.arr
+    x = item.x
+    y = item.y
+    if x>= 0 and y>=0:
         game.process(x, y)
     else:
-        game.display(x, y)
-        agent = AI(game)
-        x, y = agent.getAction()
-        game.process(x, y)
-
-        if game.winner:
-            break
-
-        game.getXY()
+        game = Game(arr)
+    for i in game.arr:
+        print(*i)
+    agent = AI(game)
+    x, y = agent.getAction()
+    game.process(x, y)
+    game.display()
+    return game.arr
