@@ -4,10 +4,17 @@ from ai import AI
 SIZE = 8
 arr = [[0] * SIZE for i in range(SIZE)]
 
+
+def check(x, y):
+    return 0 <= x < SIZE and 0 <= y < SIZE
+
+print("!!! 모든 좌표는 0부터 시작 !!!")
 while 1:
     x, y = map(int, input("구멍 좌표를 입력하세요.(종료는 -1, -1): ").split())
     if x < 0 or y < 0:
         break
+    if not check(x,y):
+        continue
     arr[x][y] = -1
 
 while 1:
