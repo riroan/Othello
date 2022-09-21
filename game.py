@@ -100,19 +100,20 @@ class Game:
             arr[x][y] = p
 
     def display(self, x=-1, y=-1):
-        print("  \033[31m", end="")
+        print("  ", end="")
         print(*[i for i in range(self.size)])
         for i in range(self.size):
-            print(f"\033[31m{i}\033[37m", end="")
+            print(f"{i}", end="")
             for j in range(self.size):
                 if self.arr[i][j] == -1:
                     print(f" @", end="")
+                    continue
                 if i == x and y == j:
-                    print(f" \033[31m{self.arr[i][j]}\033[37m", end="")
+                    print(f" {self.arr[i][j]}", end="")
                 elif self.arr[i][j] == 1:
-                    print(f" \033[32m{self.arr[i][j]}\033[37m", end="")
+                    print(f" {self.arr[i][j]}", end="")
                 elif self.arr[i][j] == 2:
-                    print(f" \033[34m{self.arr[i][j]}\033[37m", end="")
+                    print(f" {self.arr[i][j]}", end="")
                 else:
                     print(f" {self.arr[i][j]}", end="")
 
